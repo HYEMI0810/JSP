@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+    $(function(){
+        $("#toInput").on("click",function(){
+            location.href="personInputForm.html";
+        })
+        $("#toOutput").on("click",function(){
+            location.href="PersonOutput.jsp";
+        })
+        $("#toDelete").on("click",function(){
+            location.href="PersonDelete.jsp";
+        })
+        $("#toModify").on("click",function(){
+            location.href="PersonModify.jsp";
+        })
+    })
+</script>
+<style>
+    *{box-sizing: border-box; text-align: center;}
+    div{border: 1px solid black;}
+    .container{width: 400px;height: 80px;margin: auto;}
+    .title{height: 25px;text-align: center;}
+    .toInput{
+        float: left;width: 25%;height: 55px;line-height: 45px;}
+    .toOutput{
+        float: left;width: 25%;height: 55px;line-height: 45px;}
+    .toDelete{
+        float: left;width: 25%;height: 55px;line-height: 45px;}
+    .toModify{
+        float: left;width: 25%;height: 55px;line-height: 45px;}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Index</div>
+        <div class="toInput">
+            <button id="toInput">New Person</button>
+        </div>
+        <div class="toOutput">
+            <button id="toOutput">Person List</button>
+        </div>
+        <div class="toDelete">
+            <button id="toDelete">Delete</button>
+        </div>
+        <div class="toModify">
+            <button id="toModify">Modify</button>
+        </div>
+    </div>
+</body>
+</html>
