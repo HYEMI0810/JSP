@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>.</title>
 </head>
 <body>
 	<table border=1 align=center>
