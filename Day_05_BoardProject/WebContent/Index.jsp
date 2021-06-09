@@ -30,6 +30,9 @@ $(function(){
 	$("#update").on("click",function(){
 		location.href="update.mem"
 	})
+	$("#board").on("click",function(){
+		location.href="boardList.board"
+	})
 })
 </script>
 </head>
@@ -37,9 +40,9 @@ $(function(){
 	<c:choose>
 		<c:when test="${login != null }">
 			<br>
-			<b>Welcome ${login.name}!<br><br>
+			<b>Welcome ${login.name}!</b><br><br>
 			<button type="button" class="btn btn-outline-secondary btn-lg" id="mypage">MyPage</button>
-			<button type="button" class="btn btn-outline-secondary btn-lg">Temp</button>
+			<button type="button" class="btn btn-outline-secondary btn-lg" id="board">Board</button>
 			<button type="button" class="btn btn-outline-secondary btn-lg" id="update">Update</button>
 			<button type="button" class="btn btn-outline-secondary btn-lg" id="logout">Logout</button>
 			<button type="button" class="btn btn-outline-secondary btn-lg" id="quit">MemberOut</button><br>

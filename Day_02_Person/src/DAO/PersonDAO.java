@@ -37,8 +37,7 @@ public class PersonDAO {
 		try(
 			Connection con = this.getConnection();	
 			PreparedStatement pstat = con.prepareStatement(sql);	
-			ResultSet rs = pstat.executeQuery();
-				){
+			ResultSet rs = pstat.executeQuery();){
 			List<PersonDTO>list = new ArrayList<>();
 			while(rs.next()) {
 				int id = rs.getInt("id");
