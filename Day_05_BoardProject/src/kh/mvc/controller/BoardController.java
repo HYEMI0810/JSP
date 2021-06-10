@@ -55,7 +55,20 @@ public class BoardController extends HttpServlet {
 			int seq = Integer.parseInt(request.getParameter("board"));
 			int result = dao.delete(seq);
 			
+			response.sendRedirect(ctxPath+"/boardList.board");
+					
+		}else if(url.contentEquals("/modify.board")) {
+			int seq = Integer.parseInt(request.getParameter("post"));
+			BoardDTO dto = dao.modify(seq);
+			request.setAttribute("post", dto);
+			request.getRequestDispatcher("board/modify.jsp").forward(request, response);
 			
+		}else if(url.contentEquals("/modifyProc.board")) {
+			int seq = Integer.parseInt(request.getParameter("seq"));
+			String title = request.getParameter("title");
+			String contents = request.getParameter("contents");
+			int result = dao.modifyBoard(new BoardDTO(seq,title,contents));
+			response.sendRedirect(ctxPath+"/boardList.board");
 		}
 		}catch(Exception e) {
 			e.printStackTrace();

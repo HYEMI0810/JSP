@@ -7,7 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-
+<script>
+	function(){
+		$("#id").on("click",function(){
+			location.href="boardList.board"
+		})
+	}
+</script>
 </head>
 <body>
 	<table border="1" align="center">

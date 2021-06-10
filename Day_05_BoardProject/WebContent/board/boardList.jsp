@@ -24,8 +24,8 @@
         <tr>
             <td>${item.seq}</td>
             <td><a href = "${pageContext.request.contextPath}/post.board?post=${item.seq}">${item.title}</a></td>
-            <td>${item.writer }</td>
-            <td>${item.writeDate }</td>
+            <td>${item.writer}</td>
+            <td>${item.writeDate}</td>
             <td>${item.viewCount }</td>
         </tr>
         </c:forEach>
@@ -35,7 +35,7 @@
         <tr>
             <td colspan="5" align="right">
             <a href="${pageContext.request.contextPath}/board/write.jsp"><button>글쓰기</button></a>
-            <a href="index.jsp"><button>Back</button></a></td>
+            <a href="Index.jsp"><button type="button">Back</button></a></td>
         </tr>
 
     </table>

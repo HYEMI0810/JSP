@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.naming.Context;
@@ -45,7 +45,7 @@ public class BoardDAO {
 		}
 	
 	public List<BoardDTO> list() throws Exception{
-		String sql = "select * from board";
+		String sql = "select * from board order by 1";
 		try(Connection connection = this.getConnection();
 			PreparedStatement pstat = connection.prepareStatement(sql);
 			ResultSet rs = pstat.executeQuery();){
@@ -81,6 +81,32 @@ public class BoardDAO {
 		try(Connection connection = this.getConnection();
 			PreparedStatement pstat = connection.prepareStatement(sql);){
 			pstat.setInt(1, seq);
+			int result = pstat.executeUpdate();
+			connection.commit();
+			return result;
+		}
+	}
+	public BoardDTO modify(int seq) throws Exception{
+		String sql = "select * from board where seq = ?";
+		BoardDTO dto = null;
+		try(Connection connection = this.getConnection();
+			PreparedStatement pstat = connection.prepareStatement(sql);){
+			pstat.setInt(1, seq);
+			try(ResultSet rs = pstat.executeQuery();){
+				if(rs.next()) {
+					dto = new BoardDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5),rs.getInt(6));
+				}
+				return dto;
+			}
+		}
+	}
+	public int modifyBoard(BoardDTO dto) throws Exception{
+		String sql = "update board set title = ? , contents = ? where seq = ?";
+		try(Connection connection = this.getConnection();
+			PreparedStatement pstat = connection.prepareStatement(sql);){
+			pstat.setString(1, dto.getTitle());
+			pstat.setString(2, dto.getContents());
+			pstat.setInt(3, dto.getSeq());
 			int result = pstat.executeUpdate();
 			connection.commit();
 			return result;

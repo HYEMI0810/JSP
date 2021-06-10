@@ -1,6 +1,6 @@
 package DTO;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class BoardDTO {
 	private int seq;
@@ -23,12 +23,18 @@ public class BoardDTO {
 		this.writer = writer;
 	}
 	
-	public BoardDTO(int seq, String title,String writer, Date WriteDate, int viewCount) {
+	public BoardDTO(int seq, String title,String writer, Date writeDate, int viewCount) {
 		this.seq = seq;
 		this.title = title;
 		this.writer = writer;
 		this.writeDate = writeDate;
 		this.viewCount = viewCount;
+	}
+	
+	public BoardDTO(int seq, String title, String contents) {
+		this.seq = seq;
+		this.title = title;
+		this.contents = contents;
 	}
 
 	public int getSeq() {

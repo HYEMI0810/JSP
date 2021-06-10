@@ -7,13 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script>
-$(function(){
-	$("#del").on("click",function(){
-		location.href="delete.board?board="+${post.seq};
-	})
-})
-</script>
 <style>
 	*{box-sizing: border-box;}
      div{border: 1px solid black;}
@@ -22,37 +15,33 @@ $(function(){
      .navi{height: 40px; float: left;}
      .navi > div{float: left; height: 40px; line-height: 40px; text-align: center;}
      .seq{width: 30px;}
-     .title{width: 250px;}
+     .title1{width: 250px;}
      .writer{width: 100px;}
      .date{width: 100px;}
      .count{width: 65px;}
-     .contents{height: 420px;}  
+     .con{height: 420px;}  
      .footer{height: 45px; line-height: 45px;}       
 </style>
 </head>
 <body>
 	<div class="container">
-        <form>
+        <form action="${pageContext.request.contextPath}/modifyProc.board" method="POST">
             <div class="main"><b>자유게시판</b></div>
             <div class="navi">
-                <div class="seq" id="seq">${post.seq}</div>
-                <div class="title">${post.title}</div>
+                <div class="seq">
+                <input type="hidden" name = "seq" value = "${post.seq}"></div>
+                <div class="title1">
+                <textarea cols="30" name="title">${post.title}</textarea></div>
                 <div class="writer">${post.writer }</div>
                 <div class="date">${post.writeDate }</div>
                 <div class="count">${post.viewCount }</div>
             </div>
-            <div class="contents">${post.contents }</div>
+            <div class="con">
+            <textarea cols="72" rows="25" name="contents">${post.contents }</textarea>
+            </div>
             <div class="footer">
-                <c:choose>
-                    <c:when test="${login.id == post.writer }">
-                        <a href = "${pageContext.request.contextPath}/modify.board?post=${post.seq}"><input type="button" value="수정"></a>
-                        <input type="button" id="del" value="삭제">
-                        <input type="button" value="목록">
-                    </c:when>
-                    <c:otherwise>
-                        <input type="button" value="목록">
-                    </c:otherwise>
-                </c:choose>
+            	<input type="submit" value="완료">
+                <input type="button" value="목록">
             </div>
         </form>
     </div>

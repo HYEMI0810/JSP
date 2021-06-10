@@ -70,8 +70,7 @@ public class PersonDAO {
 		String sql = "update person set name =?,contact=? where id=?";
 		try(
 			Connection con = this.getConnection();
-			PreparedStatement pstat = con.prepareStatement(sql);
-				){
+			PreparedStatement pstat = con.prepareStatement(sql);){
 			pstat.setString(1, dto.getName());
 			pstat.setString(2, dto.getContact());
 			pstat.setInt(3, dto.getId());
