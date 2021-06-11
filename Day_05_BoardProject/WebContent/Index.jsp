@@ -31,7 +31,7 @@ $(function(){
 		location.href="update.mem"
 	})
 	$("#board").on("click",function(){
-		location.href="boardList.board"
+		location.href="boardList.board?cpage=1"
 	})
 })
 </script>

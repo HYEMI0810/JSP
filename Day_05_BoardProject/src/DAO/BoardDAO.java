@@ -3,8 +3,10 @@ package DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.util.List;
 
 import javax.naming.Context;
@@ -13,6 +15,7 @@ import javax.sql.DataSource;
 
 import DTO.BoardDTO;
 import DTO.MemberDTO;
+import kh.mvc.config.BoardConfig;
 
 public class BoardDAO {
 	private static BoardDAO instance;
@@ -44,11 +47,22 @@ public class BoardDAO {
 			}
 		}
 	
-	public List<BoardDTO> list() throws Exception{
-		String sql = "select * from board order by 1";
+	public List<BoardDTO> getPageList(int startNum, int endNum) throws Exception{
+		String sql = "select * from\r\n"
+				+ "(select\r\n"
+				+ "    row_number() over(order by seq desc) rnum,\r\n"
+				+ "    seq,\r\n"
+				+ "    title,\r\n"
+				+ "    writer,\r\n"
+				+ "    writeDate,\r\n"
+				+ "    viewCount\r\n"
+				+ "from\r\n"
+				+ "    board) where rnum between ? and ?";
 		try(Connection connection = this.getConnection();
-			PreparedStatement pstat = connection.prepareStatement(sql);
-			ResultSet rs = pstat.executeQuery();){
+			PreparedStatement pstat = connection.prepareStatement(sql);){
+			pstat.setInt(1, startNum);
+			pstat.setInt(2, endNum);	
+			try(ResultSet rs = pstat.executeQuery();){
 			List<BoardDTO>list = new ArrayList<>();
 			while(rs.next()) {
 				int seq = rs.getInt(1);
@@ -61,7 +75,9 @@ public class BoardDAO {
 			}
 				return list;
 		}
+		}
 	}
+	
 	public BoardDTO view(int id) throws Exception{
 		String sql = "select * from board where seq = ?";
 		BoardDTO dto = null;
@@ -112,4 +128,79 @@ public class BoardDAO {
 			return result;
 		}
 	}
+	
+	private int getRecordCount() throws Exception{
+		String sql = "select count(*) from board";
+		try(Connection connection = this.getConnection();
+			PreparedStatement pstat = connection.prepareStatement(sql);){
+			ResultSet rs = pstat.executeQuery();{
+				rs.next();
+				return rs.getInt(1);
+			}
+		}
+	}
+	
+	public List<String> getPageNavi(int currentPage) throws Exception{
+		int recordTotalCount = this.getRecordCount(); //전체 레코드의 개수
+		int recordCountPerPage = BoardConfig.RECORD_COUNT_PER_PAGE; //한 페이지당 보여줄 게시글의 개수
+		int naviCountPerPage = BoardConfig.NAVI_COUNT_PER_PAGE; //내 위치를 기준으로 시작부터 끝까지의 페이지가 총 몇개인지
+		
+		int pageTotalCount = 0;		
+		if(recordTotalCount % recordCountPerPage > 0) {
+			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
+		}else {
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+		
+		if(currentPage > pageTotalCount) {
+			currentPage = pageTotalCount;
+		}else if(currentPage < 1) {
+			currentPage = 1;
+		}
+				
+		int startNavi = (currentPage-1) / naviCountPerPage * naviCountPerPage + 1;
+		int endNavi = startNavi + (naviCountPerPage - 1);
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		
+		boolean needPrev = true;
+		boolean needNext = true;
+		
+		if(startNavi == 1) {needPrev = false;}
+		if(endNavi == pageTotalCount) {needNext = false;}
+		
+		List<String> pageNavi = new ArrayList<>();
+		
+		if(needPrev) {pageNavi.add("<");}
+		
+		for(int i = startNavi; i <= endNavi; i++) {
+			pageNavi.add(String.valueOf(i));
+		}
+		
+		if(needNext) {pageNavi.add(">");}
+
+		return pageNavi;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+//Class.forName("oracle.jdbc.driver.OracleDriver");		
+//Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","kh","kh");
+//Statement stat = con.createStatement();
+//
+//for(int i = 0; i < 143; i++) {
+//	stat.executeUpdate("insert into board values(seq_seq.nextval,'title"+i+"','contents"+i+"','writer"+i+"',default,0)");
+//	stat.addBatch("insert into board values(seq_seq.nextval,'title"+i +"','contents"+i+"','writer"+i+"',default,0)");
+//}
+//stat.executeBatch();
+//con.commit();
+//con.close();

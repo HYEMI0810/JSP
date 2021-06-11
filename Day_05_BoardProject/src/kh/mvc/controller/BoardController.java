@@ -13,6 +13,7 @@ import DAO.BoardDAO;
 import DAO.MemberDAO;
 import DTO.BoardDTO;
 import DTO.MemberDTO;
+import kh.mvc.config.BoardConfig;
 
 @WebServlet("*.board")
 public class BoardController extends HttpServlet {
@@ -30,10 +31,18 @@ public class BoardController extends HttpServlet {
 		try {
 		BoardDAO dao = BoardDAO.getInstance();
 		
-		if(url.contentEquals("/boardList.board")){
+		if(url.contentEquals("/boardList.board")){			
+			int cpage = Integer.parseInt(request.getParameter("cpage"));
+			
 			MemberDTO mdto =(MemberDTO)request.getSession().getAttribute("login");
-			List<BoardDTO> dto = dao.list();
+			
+			int endNum = cpage * BoardConfig.RECORD_COUNT_PER_PAGE;
+			int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE - 1);
+			
+			List<BoardDTO> dto = dao.getPageList(startNum , endNum);
+			List<String> pageNavi = dao.getPageNavi(cpage);
 			request.setAttribute("list", dto);
+			request.setAttribute("navi", pageNavi);
 			request.getRequestDispatcher("board/boardList.jsp").forward(request, response);
 			
 		}else if(url.contentEquals("/board/write.board")) {

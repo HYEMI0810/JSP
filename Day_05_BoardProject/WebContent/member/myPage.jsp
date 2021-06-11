@@ -44,7 +44,9 @@
 			<td>reg_Date</td>
 			<td>${list.reg_date }</td>
 		</tr>
+		<tr>
+			<td colspan="2"><a href="Index.jsp"><button class="btn btn-outline-secondary">Back</button></a></td>
+		</tr>
 	</table>
-	<a href="Index.jsp"><button class="btn btn-outline-secondary">Back</button></a>
 </body>
 </html>

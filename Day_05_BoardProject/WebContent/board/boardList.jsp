@@ -30,7 +30,21 @@
         </tr>
         </c:forEach>
         <tr>
-            <td colspan="5" align="center">1 2 3 4 5 6 7 8 9 10</td>
+            <td colspan="5" align="center">
+            	<c:forEach var="i" items="#{navi }" varStatus="s">
+            		<c:choose>
+            			<c:when test="${i == '>'}">
+            				<a href = "${pageContext.request.contextPath}/boardList.board?cpage=${navi[s.index -1]+1}">${i}</a>
+            			</c:when>
+            			<c:when test="${i == '<'}">
+            				<a href = "${pageContext.request.contextPath}/boardList.board?cpage=${navi[s.index +1]-1}">${i}</a>
+            			</c:when>
+            			<c:otherwise>
+            				<a href = "${pageContext.request.contextPath}/boardList.board?cpage=${i}">${i}</a>
+            			</c:otherwise>
+            		</c:choose>
+            	</c:forEach>
+            </td>
         </tr>
         <tr>
             <td colspan="5" align="right">
