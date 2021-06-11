@@ -41,7 +41,7 @@
             </div>
             <div class="footer">
             	<input type="submit" value="완료">
-                <input type="button" value="목록">
+                <a href="${pageContext.request.contextPath}/boardList.board?cpage=1"><button type="button" id="list">목록</button></td></a>
             </div>
         </form>
     </div>

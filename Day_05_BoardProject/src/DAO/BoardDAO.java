@@ -48,16 +48,7 @@ public class BoardDAO {
 		}
 	
 	public List<BoardDTO> getPageList(int startNum, int endNum) throws Exception{
-		String sql = "select * from\r\n"
-				+ "(select\r\n"
-				+ "    row_number() over(order by seq desc) rnum,\r\n"
-				+ "    seq,\r\n"
-				+ "    title,\r\n"
-				+ "    writer,\r\n"
-				+ "    writeDate,\r\n"
-				+ "    viewCount\r\n"
-				+ "from\r\n"
-				+ "    board) where rnum between ? and ?";
+		String sql = "select * from (select row_number() over(order by seq desc) rnum,seq,title,writer,writeDate,viewCount from board) where rnum between ? and ?";
 		try(Connection connection = this.getConnection();
 			PreparedStatement pstat = connection.prepareStatement(sql);){
 			pstat.setInt(1, startNum);
@@ -65,8 +56,8 @@ public class BoardDAO {
 			try(ResultSet rs = pstat.executeQuery();){
 			List<BoardDTO>list = new ArrayList<>();
 			while(rs.next()) {
-				int seq = rs.getInt(1);
-				String title = rs.getString(2);
+				int seq = rs.getInt(2);
+				String title = rs.getString(3);
 				String writer = rs.getString(4);
 				Date writeDate = rs.getDate(5);
 				int viewCount = rs.getInt(6);

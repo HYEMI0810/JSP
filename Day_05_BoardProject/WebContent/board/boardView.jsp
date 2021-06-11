@@ -50,7 +50,7 @@ $(function(){
                         <input type="button" value="목록">
                     </c:when>
                     <c:otherwise>
-                        <input type="button" value="목록">
+                        <a href="${pageContext.request.contextPath}/boardList.board?cpage=1"><button type="button" id="list">목록</button></td></a>
                     </c:otherwise>
                 </c:choose>
             </div>

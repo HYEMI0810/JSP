@@ -52,7 +52,7 @@ public class BoardController extends HttpServlet {
 			String contents = request.getParameter("contents");
 			int result = dao.write(title, contents, writer);
 			
-			response.sendRedirect(ctxPath+"/boardList.board");
+			response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
 			
 		}else if(url.contentEquals("/post.board")) {
 			int id = Integer.parseInt(request.getParameter("post"));
@@ -64,7 +64,7 @@ public class BoardController extends HttpServlet {
 			int seq = Integer.parseInt(request.getParameter("board"));
 			int result = dao.delete(seq);
 			
-			response.sendRedirect(ctxPath+"/boardList.board");
+			response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
 					
 		}else if(url.contentEquals("/modify.board")) {
 			int seq = Integer.parseInt(request.getParameter("post"));
@@ -77,7 +77,7 @@ public class BoardController extends HttpServlet {
 			String title = request.getParameter("title");
 			String contents = request.getParameter("contents");
 			int result = dao.modifyBoard(new BoardDTO(seq,title,contents));
-			response.sendRedirect(ctxPath+"/boardList.board");
+			response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
 		}
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -13,7 +13,7 @@
 	<c:choose>
 		<c:when test="${result > 0}">
 			alert("가입완료");
-			location.href="Index.jsp";
+			location.href="${pageContext.request.contextPath}/Index.jsp";
 		</c:when>
 		<c:otherwise>
 			return;
