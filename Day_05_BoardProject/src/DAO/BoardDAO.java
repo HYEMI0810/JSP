@@ -69,12 +69,12 @@ public class BoardDAO {
 		}
 	}
 	
-	public BoardDTO view(int id) throws Exception{
+	public BoardDTO view(int seq) throws Exception{
 		String sql = "select * from board where seq = ?";
 		BoardDTO dto = null;
 		try(Connection connection = this.getConnection();
 			PreparedStatement pstat = connection.prepareStatement(sql);){
-			pstat.setInt(1, id);
+			pstat.setInt(1, seq);
 			try(ResultSet rs = pstat.executeQuery();){
 				if(rs.next()) {
 					dto = new BoardDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5),rs.getInt(6));
@@ -83,6 +83,20 @@ public class BoardDAO {
 			}
 		}
 	}
+	
+	public int viewCount(int seq,int viewCount) throws Exception{
+		String sql = "update board set viewCount=? where seq = ?";
+		try(Connection connection = this.getConnection();
+			PreparedStatement pstat = connection.prepareStatement(sql);){
+			pstat.setInt(1, viewCount+1);
+			pstat.setInt(2, seq);
+			int result = pstat.executeUpdate();
+			connection.commit();
+			return result;
+			
+		}
+	}
+	
 	public int delete(int seq) throws Exception{
 		String sql = "delete from board where seq = ?";
 		try(Connection connection = this.getConnection();

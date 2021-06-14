@@ -36,6 +36,11 @@ public class BoardDTO {
 		this.title = title;
 		this.contents = contents;
 	}
+	
+	public BoardDTO(int seq, int viewCount) {
+		this.seq = seq;
+		this.viewCount = viewCount;
+	}
 
 	public int getSeq() {
 		return seq;

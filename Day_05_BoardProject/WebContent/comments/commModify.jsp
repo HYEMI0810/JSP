@@ -7,17 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script>
-$(function(){
-	$("#delete").on("click",function(){
-		if(confirm("정말삭제?")){
-			location.href="${pageContext.request.contextPath}/delete.comm?seq="+$(this).val();
-		}else{
-			return;
-		}
-	})
-})
-</script>
 <style>
 	*{box-sizing: border-box;}
      div{border: 1px solid black;}
@@ -35,7 +24,7 @@ $(function(){
      .controller{width: 550px; height: 50px; margin: 10px;}
      .comment{float: left; width: 450px; height: 100%; textalign: left}
      .reply{float: left; width: 98px; height: 100%;}
-     #btn{width: 100%; height: 100%;}   
+     #btn{width: 100%; height: 100%;} 	  
 </style>
 </head>
 <body>
@@ -60,32 +49,16 @@ $(function(){
                         <a href="${pageContext.request.contextPath}/boardList.board?cpage=1"><button type="button" id="list">목록</button></td></a>
                     </c:otherwise>
                 </c:choose>
-                
-                <form action="comment.comm" method="post">
+
+                <form action="modifyProc.comm" method="post">
                 <div class="controller">
-                    <textarea class="comment" name="comments">
+                	<input type="hidden" value="${seq3}" name="seq3">
+                    <textarea class="comment" name="comments">${comments }
                     </textarea>
-                    <input type="hidden" value="${post.seq }" name="parent">
                     <div class="reply">
-                        <input type="submit" id="btn" value="[댓글등록]">
+                        <input type="submit" id="btn" value="[완료]">
                     </div>
                 </div>
-                </form>
-                <form action="modify.comm" method="post">
-                 <c:forEach var = "item" items="${comment}">
-                 <input type="hidden" value="${item.seq}" name="seq2">
-                 <input type="hidden" value="${item.parent_seq}" name="parent_seq">
-                	작성자 : ${item.writer}
-                	작성일 : ${item.writeDate}
-                	<br>
-                	내  용 : ${item.comments }
-                	<input type="hidden" value="${item.comments }" name="comments2">
-                	<c:if test="${login.id == item.writer }">
-                	 	<button type="button" id="delete" value="${item.seq}">[삭제]</button>
-                	 	<input type="submit" id="modify" value="[수정]">
-                	 </c:if>
-                	 <hr>
-                </c:forEach>
                 </form>
            
             </div>
