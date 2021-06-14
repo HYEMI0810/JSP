@@ -73,12 +73,26 @@ public class CommentsDAO {
 			return result;
 		}
 	}
+	public int parentid(int childid) throws Exception{
+		String sql = "select parent_seq from comments where seq = ?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+				pstat.setInt(1, childid);
+				try(ResultSet rs = pstat.executeQuery();){
+					if(rs.next())
+					{
+						return rs.getInt("parent_seq");
+					}
+				}
+			return 0;
+		}
+	}
 	
-	public int modifyComment(String comments, int seq4) throws Exception{
+	public int modifyComment(String comments1, int seq4) throws Exception{
 		String sql = "update comments set comments = ? where seq = ?";
 		try(Connection con = this.getConnection();
 			PreparedStatement pstat = con.prepareStatement(sql);){
-			pstat.setString(1, comments);
+			pstat.setString(1, comments1);
 			pstat.setInt(2, seq4);
 			int result = pstat.executeUpdate();
 			con.commit();

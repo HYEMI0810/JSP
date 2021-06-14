@@ -38,25 +38,28 @@ public class CommentsController extends HttpServlet {
 				
 			}else if(url.contentEquals("/delete.comm")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
+				int parent = dao.parentid(seq);
 				int result = dao.delComment(seq);
-				response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
+				response.sendRedirect("post.board?post="+parent);
 				
 			}else if(url.contentEquals("/modify.comm")) {
-				int seq2 = Integer.parseInt(request.getParameter("seq2"));
+				int seq2 = Integer.parseInt(request.getParameter("seq"));
+				System.out.println(seq2);
 				request.setAttribute("seq3", seq2);
 				String comments = request.getParameter("comments2");
 				BoardDAO bb = BoardDAO.getInstance();
 				bb.view(seq2);
-				request.setAttribute("post", bb.view(seq2));
+				request.setAttribute("post", bb.view(dao.parentid(seq2)));
 				request.setAttribute("comments", comments);
 				
 				request.getRequestDispatcher("comments/commModify.jsp").forward(request, response);
 
 			}else if(url.contentEquals("/modifyProc.comm")) {
 				int seq4 = Integer.parseInt(request.getParameter("seq3"));
-				String comments = request.getParameter("comments");
-				int result = dao.modifyComment(comments, seq4);
-				response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
+				String comments1 = request.getParameter("comments1");
+				int result = dao.modifyComment(comments1, seq4);
+				int parent =dao.parentid(seq4);
+				response.sendRedirect("post.board?post="+parent);
 				
 			}
 			

@@ -34,6 +34,8 @@ $(function(){
 		location.href="boardList.board?cpage=1"
 	})
 })
+
+
 </script>
 </head>
 <body>

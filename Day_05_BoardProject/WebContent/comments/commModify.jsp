@@ -46,14 +46,14 @@
                         <a href="pageContext.request.contextPath}/boardList.board?cpage=1"><input type="button" value="목록"></a>
                     </c:when>
                     <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/boardList.board?cpage=1"><button type="button" id="list">목록</button></td></a>
+                        <a href="${pageContext.request.contextPath}/boardList.board?cpage=1"><button type="button" id="list">목록</button></a>
                     </c:otherwise>
                 </c:choose>
 
                 <form action="modifyProc.comm" method="post">
                 <div class="controller">
                 	<input type="hidden" value="${seq3}" name="seq3">
-                    <textarea class="comment" name="comments">${comments }
+                    <textarea class="comment" name="comments1">${comments }
                     </textarea>
                     <div class="reply">
                         <input type="submit" id="btn" value="[완료]">
