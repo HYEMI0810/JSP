@@ -58,6 +58,7 @@
             			<option>제목 + 내용</option>
             		</select>
             		<input type="text" name="text" placeholder="검색어를 입력하세요">
+            		<input type = "hidden" name ="cpage" value =1>
             		<button>[검색]</button>
             	</td>
             </form>

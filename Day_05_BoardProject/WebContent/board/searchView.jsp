@@ -32,19 +32,35 @@
             	<c:forEach var="i" items="#{navi }" varStatus="s">
             		<c:choose>
             			<c:when test="${i == '>'}">
-            				<a href = "${pageContext.request.contextPath}/boardList.board?cpage=${navi[s.index -1]+1}">${i}</a>
+            				<a href = "${pageContext.request.contextPath}/search.board?search=${search}&text=${text}&cpage=${navi[s.index -1]+1}">${i}</a>
             			</c:when>
             			<c:when test="${i == '<'}">	
-            				<a href = "${pageContext.request.contextPath}/boardList.board?cpage=${navi[s.index +1]-1}">${i}</a>
+            				<a href = "${pageContext.request.contextPath}/search.board?search=${search}&text=${text}&cpage=${navi[s.index +1]-1}">${i}</a>
             			</c:when>
             			<c:otherwise>
-            				<a href = "${pageContext.request.contextPath}/boardList.board?cpage=${i}">${i}</a>
+            				<a href = "${pageContext.request.contextPath}/search.board?search=${search}&text=${text}&cpage=${i}">${i}</a>
             			</c:otherwise>
             		</c:choose>
             	</c:forEach>
             	<a href="${pageContext.request.contextPath}/boardList.board?cpage=1"><button type="button">Back</button></a>
             </td>
 		</tr>
+		
+		  <tr>
+        	<form action="search.board" method="post">
+            	<td colspan="5" align="right">
+            		<select name=search>
+            			<option>제목</option>
+            			<option>내용</option>
+            			<option>작성자</option>
+            			<option>제목 + 내용</option>
+            		</select>
+            		<input type="text" name="text" placeholder="검색어를 입력하세요">
+            		<input type = "hidden" name ="cpage" value =1>
+            		<button>[검색]</button>
+            	</td>
+            </form>
+        </tr>
         
 	</table>
 </body>

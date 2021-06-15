@@ -27,7 +27,7 @@
             if(pw != ch){
                 val.innerHTML = "패스워드가 일치하지 않습니다.."
             }else{
-             	val.innerHTML = "패스워드가 일치합니다."
+             	val.innerHTML = "패스워드가 일치합니다." 
             }
         }
     }

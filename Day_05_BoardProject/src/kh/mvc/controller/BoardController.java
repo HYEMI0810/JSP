@@ -87,12 +87,14 @@ public class BoardController extends HttpServlet {
 			response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
 			
 		}else if(url.contentEquals("/search.board")) {
+			
+			if(!request.getParameter("text").equalsIgnoreCase("")) {
 			String search = request.getParameter("search");
 			String text = request.getParameter("text");
 			List<BoardDTO>dto = null;
 			
 			if(search.contentEquals("제목")) {
-				int cpage = 1;	
+				int cpage = Integer.parseInt(request.getParameter("cpage"));	
 				int endNum = cpage * BoardConfig.RECORD_COUNT_PER_PAGE;
 				int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE - 1);
 				dto = dao.searchTitle(startNum,endNum,text);
@@ -100,7 +102,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("navi", pageNavi);
 				
 			}else if(search.contentEquals("내용")) {
-				int cpage = 1;	
+				int cpage = Integer.parseInt(request.getParameter("cpage"));	
 				int endNum = cpage * BoardConfig.RECORD_COUNT_PER_PAGE;
 				int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE - 1);
 				dto = dao.searchContent(startNum,endNum,text);
@@ -108,7 +110,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("navi", pageNavi);
 				
 			}else if(search.contentEquals("작성자")) {
-				int cpage = 1;	
+				int cpage = Integer.parseInt(request.getParameter("cpage"));	
 				int endNum = cpage * BoardConfig.RECORD_COUNT_PER_PAGE;
 				int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE - 1);
 				dto = dao.searchWriter(startNum,endNum,text);
@@ -116,20 +118,22 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("navi", pageNavi);
 				
 			}else if(search.contentEquals("제목 + 내용")){
-				int cpage = 1;	
+				int cpage = Integer.parseInt(request.getParameter("cpage"));	
 				int endNum = cpage * BoardConfig.RECORD_COUNT_PER_PAGE;
 				int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE - 1);
 				dto = dao.searchDuple(startNum,endNum,text);
 				List<String> pageNavi = dao.getPageNavi(cpage);
 				request.setAttribute("navi", pageNavi);
 								
-			}else {
-				response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
-				
 			}
 			request.setAttribute("list", dto);
+			request.setAttribute("search", search);
+			request.setAttribute("text", text);
 			request.getRequestDispatcher("board/searchView.jsp").forward(request, response);
-			
+			}
+			else {
+				response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
+			}
 		}
 		
 		}catch(Exception e) {
