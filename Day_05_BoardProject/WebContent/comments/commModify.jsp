@@ -10,7 +10,7 @@
 <style>
 	*{box-sizing: border-box;}
      div{border: 1px solid black;}
-     .container{width: 550px;height: 500px; margin: auto;}
+     .container{width: 550px;height: 455px; margin: auto;}
      .main{height: 35px; text-align: center;line-height: 35px;}
      .navi{height: 40px; float: left;}
      .navi > div{float: left; height: 40px; line-height: 40px; text-align: center;}
@@ -19,8 +19,7 @@
      .writer{width: 100px;}
      .date{width: 100px;}
      .count{width: 65px;}
-     .contents{height: 420px;}  
-     .footer{height: 45px; line-height: 45px;}    
+     .contents{height: 420px;}     
      .controller{width: 550px; height: 50px; margin: 10px;}
      .comment{float: left; width: 450px; height: 100%; textalign: left}
      .reply{float: left; width: 98px; height: 100%;}
@@ -38,17 +37,6 @@
                 <div class="count">${post.viewCount }</div>
             </div>
             <div class="contents">${post.contents }</div>
-            <div class="footer">
-                <c:choose>
-                    <c:when test="${login.id == post.writer }">
-                        <a href = "${pageContext.request.contextPath}/modify.board?post=${post.seq}"><input type="button" value="수정"></a>
-                        <input type="button" id="del" value="삭제">
-                        <a href="pageContext.request.contextPath}/boardList.board?cpage=1"><input type="button" value="목록"></a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/boardList.board?cpage=1"><button type="button" id="list">목록</button></a>
-                    </c:otherwise>
-                </c:choose>
 
                 <form action="modifyProc.comm" method="post">
                 <div class="controller">

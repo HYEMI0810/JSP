@@ -36,8 +36,6 @@ public class BoardController extends HttpServlet {
 		if(url.contentEquals("/boardList.board")){			
 			int cpage = Integer.parseInt(request.getParameter("cpage"));
 			
-			MemberDTO mdto =(MemberDTO)request.getSession().getAttribute("login");
-			
 			int endNum = cpage * BoardConfig.RECORD_COUNT_PER_PAGE;
 			int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE - 1);
 			
@@ -87,6 +85,50 @@ public class BoardController extends HttpServlet {
 			String contents = request.getParameter("contents");
 			int result = dao.modifyBoard(new BoardDTO(seq,title,contents));
 			response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
+			
+		}else if(url.contentEquals("/search.board")) {
+			String search = request.getParameter("search");
+			String text = request.getParameter("text");
+			List<BoardDTO>dto = null;
+			
+			if(search.contentEquals("제목")) {
+				int cpage = 1;	
+				int endNum = cpage * BoardConfig.RECORD_COUNT_PER_PAGE;
+				int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE - 1);
+				dto = dao.searchTitle(startNum,endNum,text);
+				List<String> pageNavi = dao.getPageNavi(cpage);
+				request.setAttribute("navi", pageNavi);
+				
+			}else if(search.contentEquals("내용")) {
+				int cpage = 1;	
+				int endNum = cpage * BoardConfig.RECORD_COUNT_PER_PAGE;
+				int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE - 1);
+				dto = dao.searchContent(startNum,endNum,text);
+				List<String> pageNavi = dao.getPageNavi(cpage);
+				request.setAttribute("navi", pageNavi);
+				
+			}else if(search.contentEquals("작성자")) {
+				int cpage = 1;	
+				int endNum = cpage * BoardConfig.RECORD_COUNT_PER_PAGE;
+				int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE - 1);
+				dto = dao.searchWriter(startNum,endNum,text);
+				List<String> pageNavi = dao.getPageNavi(cpage);
+				request.setAttribute("navi", pageNavi);
+				
+			}else if(search.contentEquals("제목 + 내용")){
+				int cpage = 1;	
+				int endNum = cpage * BoardConfig.RECORD_COUNT_PER_PAGE;
+				int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE - 1);
+				dto = dao.searchDuple(startNum,endNum,text);
+				List<String> pageNavi = dao.getPageNavi(cpage);
+				request.setAttribute("navi", pageNavi);
+								
+			}else {
+				response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
+				
+			}
+			request.setAttribute("list", dto);
+			request.getRequestDispatcher("board/searchView.jsp").forward(request, response);
 			
 		}
 		

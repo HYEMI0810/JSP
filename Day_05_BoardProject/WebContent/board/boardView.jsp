@@ -26,7 +26,7 @@ $(function(){
      .navi{height: 40px; float: left;}
      .navi > div{float: left; height: 40px; line-height: 40px; text-align: center;}
      .seq{width: 30px;}
-     .title{width: 250px;}
+     .title{width: 250px;overflow:hidden;word-wrap:break-word;}
      .writer{width: 100px;}
      .date{width: 100px;}
      .count{width: 65px;}
@@ -68,11 +68,10 @@ $(function(){
                     </div>
                 </div>
                 </form>
-                <!-- <form action="modify.comm" method="post">--> <!-- modify.comm --> 댓글 10개
+                <!-- <form action="modify.comm" method="post">--> <!-- modify.comm -->
                  <c:forEach var = "item" items="${comment}">
                   <form action="modify.comm" method="post">
 	                 <input type="hidden" value="${item.seq}" name="seq">  <!-- 댓글 번호 -->
-                 ${item.seq}
                 	작성자 : ${item.writer}
                 	작성일 : ${item.writeDate}
                 	<br>

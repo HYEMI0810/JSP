@@ -30,9 +30,9 @@
         </tr>
         <tr>
             <td colspan="2" align="right">
-            <input type="submit" value="글쓰기">
+            <input type="submit" value="등록">
             <input type="reset"  value="초기화">
-            <a href="${pageContext.request.contextPath}/boardList.board?cpage=1"><button type="button" id="list">목록</button></td></a>
+            <a href="${pageContext.request.contextPath}/boardList.board?cpage=1"><button type="button" id="list">목록</button></a>
         </tr>
 	</form>
     </table>

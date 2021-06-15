@@ -187,6 +187,96 @@ public class BoardDAO {
 
 		return pageNavi;
 	}
+	
+	public List<BoardDTO> searchTitle(int startNum, int endNum,String text) throws Exception{
+		String sql = "select * from (select row_number() over(order by seq desc) rnum,seq,title,writer,writeDate,viewCount from board where title like '%" + text +"%') where rnum between ? and ?";
+		try(Connection connection = this.getConnection();
+			PreparedStatement pstat = connection.prepareStatement(sql);){
+			pstat.setInt(1, startNum);
+			pstat.setInt(2, endNum);
+			try(ResultSet rs = pstat.executeQuery();){
+				List<BoardDTO> list = new ArrayList<>();
+				while(rs.next()) {
+					int seq = rs.getInt("seq");
+					String title = rs.getString("title");
+					String writer = rs.getString("writer");
+					Date writeDate = rs.getDate("writeDate");
+					int viewCount = rs.getInt("viewCount");
+					BoardDTO dto = new BoardDTO(seq,title,writer,writeDate,viewCount);
+					list.add(dto);
+				}
+				return list;
+			}
+		}
+	}
+	
+	public List<BoardDTO>searchContent(int startNum, int endNum,String text) throws Exception{
+		String sql = "select * from (select row_number() over(order by seq desc) rnum,seq,title,writer,writeDate,viewCount from board where contents like '%" + text +"%') where rnum between ? and ?";
+		try(Connection connection = this.getConnection();
+			PreparedStatement pstat = connection.prepareStatement(sql);){
+			pstat.setInt(1, startNum);
+			pstat.setInt(2, endNum);
+			try(ResultSet rs = pstat.executeQuery();){
+				List<BoardDTO> list = new ArrayList<>();
+				while(rs.next()) {
+					int seq = rs.getInt("seq");
+					String title = rs.getString("title");
+					String writer = rs.getString("writer");
+					Date writeDate = rs.getDate("writeDate");
+					int viewCount = rs.getInt("viewCount");
+					BoardDTO dto = new BoardDTO(seq,title,writer,writeDate,viewCount);
+					list.add(dto);
+				}
+				return list;
+			}
+		}
+	}
+	
+	public List<BoardDTO>searchWriter(int startNum, int endNum,String text) throws Exception{
+		String sql = "select * from (select row_number() over(order by seq desc) rnum,seq,title,writer,writeDate,viewCount from board where writer like '%" + text +"%') where rnum between ? and ?";
+		try(Connection connection = this.getConnection();
+			PreparedStatement pstat = connection.prepareStatement(sql);){
+			pstat.setInt(1, startNum);
+			pstat.setInt(2, endNum);
+			try(ResultSet rs = pstat.executeQuery();){
+				List<BoardDTO> list = new ArrayList<>();
+				while(rs.next()) {
+					int seq = rs.getInt("seq");
+					String title = rs.getString("title");
+					String writer = rs.getString("writer");
+					Date writeDate = rs.getDate("writeDate");
+					int viewCount = rs.getInt("viewCount");
+					BoardDTO dto = new BoardDTO(seq,title,writer,writeDate,viewCount);
+					list.add(dto);
+				}
+				return list;
+			}
+		}
+	}
+	
+	public List<BoardDTO>searchDuple(int startNum, int endNum,String text) throws Exception{
+		String sql = "select * from (select row_number() over(order by seq desc) rnum,seq,title,writer,writeDate,viewCount "
+				+ "from board where title like '%" + text + "%' or contents like '%" + text + "%') where rnum between ? and ?";
+		try(Connection connection = this.getConnection();
+			PreparedStatement pstat = connection.prepareStatement(sql);){
+			pstat.setInt(1, startNum);
+			pstat.setInt(2, endNum);
+			try(ResultSet rs = pstat.executeQuery();){
+				List<BoardDTO> list = new ArrayList<>();
+				while(rs.next()) {
+					int seq = rs.getInt("seq");
+					String title = rs.getString("title");
+					String writer = rs.getString("writer");
+					Date writeDate = rs.getDate("writeDate");
+					int viewCount = rs.getInt("viewCount");
+					BoardDTO dto = new BoardDTO(seq,title,writer,writeDate,viewCount);
+					list.add(dto);
+				}
+				return list;
+			}
+		}
+	}
+	
 }
 
 
