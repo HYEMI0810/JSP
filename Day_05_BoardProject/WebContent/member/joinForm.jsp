@@ -29,11 +29,24 @@
             }else{
              	val.innerHTML = "패스워드가 일치합니다." 
             }
-        }
+        }		
     }
 		$(function(){
 			$("#check").on("click",function(){
-				window.open("${pageContext.request.contextPath}/idCheck.mem?id=" + $("#id").val() ,"", "width=400,height=400" );
+				let id = $("#id").val();
+				let idRegex = /^[A-Z][a-zA-Z0-9]{5, }$/;
+				if(id == ""){
+					alert("아이디를 입력하세요")
+					return;
+				}else{
+					let resultid = idRegex.test(id);
+					if(resultid){
+						window.open("${pageContext.request.contextPath}/idCheck.mem?id=" + $("#id").val() ,"", "width=400,height=400" );
+					}else{
+						alert("아이디 형식을 확인하세요")
+					}
+				}
+				
 		}) 
 	})
 </script>
@@ -44,7 +57,7 @@
     	<form action="joinMember.mem" method="post">
         	<div class="form-row">
           		<div class="form-group col-md-6">
-           		 <label for="inputEmail4">ID</label>
+           		 <label for="inputEmail4">ID *첫글자는 대문자이고 나머지 글자는 영문자, 숫자로 총 5글자 이상만 가능*</label>
             	 <input type="text" class="form-control" id="id" name="id">
           		</div>
           		<div >

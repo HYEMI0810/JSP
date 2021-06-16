@@ -43,11 +43,11 @@ $(function(){
 		<c:when test="${login != null }">
 			<br>
 			<b>Welcome ${login.name}!</b><br><br>
-			<button type="button" class="btn btn-outline-secondary btn-lg" id="mypage">MyPage</button>
-			<button type="button" class="btn btn-outline-secondary btn-lg" id="board">Board</button>
-			<button type="button" class="btn btn-outline-secondary btn-lg" id="update">Update</button>
-			<button type="button" class="btn btn-outline-secondary btn-lg" id="logout">Logout</button>
-			<button type="button" class="btn btn-outline-secondary btn-lg" id="quit">MemberOut</button><br>
+			<button type="button" class="btn btn-outline-secondary btn-lg" id="mypage">마이페이지</button>
+			<button type="button" class="btn btn-outline-secondary btn-lg" id="board">게시판</button>
+			<button type="button" class="btn btn-outline-secondary btn-lg" id="update">정보수정</button>
+			<button type="button" class="btn btn-outline-secondary btn-lg" id="logout">로그아웃</button>
+			<button type="button" class="btn btn-outline-secondary btn-lg" id="quit">탈퇴</button><br>
 		</c:when>
 		<c:otherwise>
 		<form action="login.mem" method=post class="needs-validation" novalidate>

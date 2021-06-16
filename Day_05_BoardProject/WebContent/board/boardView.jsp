@@ -79,7 +79,7 @@ $(function(){
                 	<input type="hidden" value="${item.comments }" name="comments2">
                 	<c:if test="${login.id == item.writer }">
                 	 	<button type="button" id="delete" value="${item.seq}">[삭제]</button>
-                	 	<button id="modify">수정</button> <!--  수정을 누르면 댓글 번호 전송-->
+                	 	<button id="modify">[수정]</button> <!--  수정을 누르면 댓글 번호 전송-->
                 	 </c:if>
                 	 <hr>
                 	 </form>

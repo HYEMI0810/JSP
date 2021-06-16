@@ -44,7 +44,6 @@ public class CommentsController extends HttpServlet {
 				
 			}else if(url.contentEquals("/modify.comm")) {
 				int seq2 = Integer.parseInt(request.getParameter("seq"));
-				System.out.println(seq2);
 				request.setAttribute("seq3", seq2);
 				String comments = request.getParameter("comments2");
 				BoardDAO bb = BoardDAO.getInstance();
