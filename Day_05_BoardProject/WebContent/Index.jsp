@@ -19,7 +19,14 @@ $(function(){
 		location.href="logout.mem";
 	})
 	$("#mypage").on("click",function(){
-		location.href="myPage.mem"
+		//location.href="myPage.mem"
+		$.ajax({
+				url:"${pageContext.request.contextPath}/myPage.mem",
+				type:"get",
+				dataType:"json"
+			}).done(function(resp){
+				console.log(resp.id);
+			})
 	})
 	$("#quit").on("click",function(){
 		if(confirm("정말탈퇴?")){

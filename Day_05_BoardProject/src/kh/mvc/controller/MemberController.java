@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import DAO.MemberDAO;
 import DTO.MemberDTO;
 
@@ -69,10 +71,14 @@ public class MemberController extends HttpServlet {
 				 response.sendRedirect("Index.jsp");
 				 
 			}else if(url.contentEquals("/myPage.mem")) {
+				Gson g = new Gson();
 				MemberDTO dto =(MemberDTO)request.getSession().getAttribute("login");
 				MemberDTO temp = dao.myPage(dto.getId());
-				request.setAttribute("list", temp);
-				request.getRequestDispatcher("/member/myPage.jsp").forward(request, response);
+				String result = g.toJson(temp);
+				System.out.println(result);
+				response.getWriter().append(result);
+//				request.setAttribute("list", temp);
+//				request.getRequestDispatcher("/member/myPage.jsp").forward(request, response);
 				
 			}else if(url.contentEquals("/quit.mem")) {
 				MemberDTO dto =(MemberDTO)request.getSession().getAttribute("login");
