@@ -1,6 +1,7 @@
 package kh.mvc.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -34,8 +35,11 @@ public class MemberController extends HttpServlet {
 			}else if(url.contentEquals("/idCheck.mem")) {
 				String id = request.getParameter("id");
 				boolean result = dao.check(id);
-				request.setAttribute("result", result);
-				request.getRequestDispatcher("member/idCheckView.jsp").forward(request, response);
+				PrintWriter out = response.getWriter();
+				if(result) {
+				out.print("ok");
+				}else {					
+				}
 			
 			}else if(url.contentEquals("/member/joinMember.mem")){
 				String id = request.getParameter("id");
@@ -92,7 +96,6 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("modi_result", result);
 				request.getRequestDispatcher("/member/updateView.jsp").forward(request, response);
 			}
-			
 			
 		}catch(Exception e) {
 			e.printStackTrace();

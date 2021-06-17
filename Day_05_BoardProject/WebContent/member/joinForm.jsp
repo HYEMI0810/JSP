@@ -34,21 +34,34 @@
 		$(function(){
 			$("#check").on("click",function(){
 				let id = $("#id").val();
-				let idRegex = /^[A-Z][a-zA-Z0-9]{5, }$/;
+				let idRegex = /^[A-Z][a-zA-Z0-9]{5}$/;
 				if(id == ""){
 					alert("아이디를 입력하세요")
 					return;
 				}else{
 					let resultid = idRegex.test(id);
 					if(resultid){
-						window.open("${pageContext.request.contextPath}/idCheck.mem?id=" + $("#id").val() ,"", "width=400,height=400" );
+						$.ajax({
+							url:"${pageContext.request.contextPath}/idCheck.mem",
+							type:"get",
+							data:"id="+$("#id").val(),
+							contentType:"text/plain;charset=uft-8",
+			                dataType:"text"
+						}).done(function(resp){
+							if(resp==="ok"){
+								alert("이미사용중");
+							}else{
+								alert("사용가능");
+							}
+								
+								})
 					}else{
-						alert("아이디 형식을 확인하세요")
+						alert("아이디형식확인");
 					}
 				}
-				
-		}) 
-	})
+						
+		})
+		})
 </script>
 
 </head>
@@ -57,7 +70,7 @@
     	<form action="joinMember.mem" method="post">
         	<div class="form-row">
           		<div class="form-group col-md-6">
-           		 <label for="inputEmail4">ID *첫글자는 대문자이고 나머지 글자는 영문자, 숫자로 총 5글자 이상만 가능*</label>
+           		 <label for="inputEmail4">ID *첫글자는 대문자,나머지 글자는 영문자,숫자로 총 5글자 이상만 가능*</label>
             	 <input type="text" class="form-control" id="id" name="id">
           		</div>
           		<div >

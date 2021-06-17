@@ -8,7 +8,7 @@
 <title>Id Check Result</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-<script>
+<!--  <script>
 	$(function(){		
 		$("#cancel").on("click",function(){
 			opener.document.getElementById("id").value= "";
@@ -41,7 +41,7 @@
 				<button id ="cancel" class="btn btn-outline-secondary">Cancel</button>
 			</div>
 		</c:otherwise>
-	</c:choose>
+	</c:choose>-->
 
 </body>
 </html>
