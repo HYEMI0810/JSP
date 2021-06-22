@@ -19,6 +19,15 @@ import kh.mvc.config.BoardConfig;
 
 @WebServlet("*.board")
 public class BoardController extends HttpServlet {
+	
+	private String XSSFilter(String target) {
+		if(target != null) {
+			target = target.replaceAll("<", "&lt");
+			target = target.replaceAll(">", "&gt");
+			target = target.replaceAll("&", "&amp");
+		}
+		return target;
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
@@ -50,6 +59,10 @@ public class BoardController extends HttpServlet {
 			String writer = dto.getId(); 
 			String title = request.getParameter("title");
 			String contents = request.getParameter("contents");
+			
+			title = XSSFilter(title);
+			contents = XSSFilter(contents);
+			
 			int result = dao.write(title, contents, writer);
 			
 			response.sendRedirect(ctxPath+"/boardList.board?cpage=1");

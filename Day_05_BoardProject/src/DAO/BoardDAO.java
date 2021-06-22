@@ -23,7 +23,7 @@ public class BoardDAO {
 	public synchronized static BoardDAO getInstance() {
 		if(instance == null) {
 			instance = new BoardDAO();
-		}
+		} 
 		return instance;
 	}
 	private BoardDAO() {}

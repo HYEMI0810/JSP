@@ -36,12 +36,12 @@
             <input type="reset"  value="초기화">
             <a href="${pageContext.request.contextPath}/boardList.board?cpage=1"><button type="button">목록</button></a>
         </div>
-        <script>
+        <!--<script>
             $('#summernote').summernote({
               tabsize: 2,
               height: 100
             });
-          </script>
+          </script> -->
     </div>
     </form> 
 </body>

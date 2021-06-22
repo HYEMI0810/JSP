@@ -41,6 +41,9 @@ $(function(){
 	$("#board").on("click",function(){
 		location.href="boardList.board?cpage=1"
 	})
+	$("#translator").on("click",function(){
+		location.href="main.tr"
+	})
 })
 
 
@@ -54,6 +57,7 @@ $(function(){
 			<button type="button" class="btn btn-outline-secondary btn-lg" id="mypage">마이페이지</button>
 			<button type="button" class="btn btn-outline-secondary btn-lg" id="board">게시판</button>
 			<button type="button" class="btn btn-outline-secondary btn-lg" id="update">정보수정</button>
+			<button type="button" class="btn btn-outline-secondary btn-lg" id="translator">번역기</button>
 			<button type="button" class="btn btn-outline-secondary btn-lg" id="logout">로그아웃</button>
 			<button type="button" class="btn btn-outline-secondary btn-lg" id="quit">탈퇴</button><br>
 		</c:when>
