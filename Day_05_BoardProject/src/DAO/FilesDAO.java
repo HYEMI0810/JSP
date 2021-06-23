@@ -11,18 +11,18 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import DTO.filesDTO;
+import DTO.FilesDTO;
 
-public class filesDAO {
-private static filesDAO instance;
+public class FilesDAO {
+private static FilesDAO instance;
 	
-	public synchronized static filesDAO getInstance() {
+	public synchronized static FilesDAO getInstance() {
 		if(instance == null) {
-			instance = new filesDAO();
+			instance = new FilesDAO();
 		} 
 		return instance;
 	}
-	private filesDAO() {}
+	private FilesDAO() {}
 	
 	private Connection getConnection() throws Exception{
 		Context ctx = new InitialContext();
@@ -30,7 +30,7 @@ private static filesDAO instance;
 		return ds.getConnection();
 	}
 	
-	public int insert(filesDTO dto) throws Exception{
+	public int insert(FilesDTO dto) throws Exception{
 		String sql = "insert into files values(files_seq.nextval,?,?,sysdate,?)";
 		try(Connection con = this.getConnection();
 			PreparedStatement pstat = con.prepareStatement(sql);){
@@ -42,22 +42,23 @@ private static filesDAO instance;
 		}
 	}
 	
-	public List<filesDTO> selectAll() throws Exception{
-		String sql = "select * from files";
+	public List<FilesDTO> selectAll(int fparent) throws Exception{
+		String sql = "select * from files where parent = ?";
 		try(Connection con = this.getConnection();
-			PreparedStatement pstat = con.prepareStatement(sql);
-			ResultSet rs = pstat.executeQuery()){
-			List<filesDTO>list = new ArrayList<>();
-			while(rs.next()) {
-				int seq = rs.getInt("seq");
-				String oriName = rs.getString("oriName");
-				String sysName = rs.getString("sysName");
-				Date regDate = rs.getDate("regDate");
-				int parent = rs.getInt("parent");
-				list.add(new filesDTO(seq,oriName,sysName,regDate,parent));
+			PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, fparent);
+			try(ResultSet rs = pstat.executeQuery();){
+				List<FilesDTO>list = new ArrayList<>();
+				while(rs.next()) {
+					int seq = rs.getInt("seq");
+					String oriName = rs.getString("oriName");
+					String sysName = rs.getString("sysName");
+					Date regDate = rs.getDate("regDate");
+					int parent = rs.getInt("parent");
+					list.add(new FilesDTO(seq,oriName,sysName,regDate,parent));
+				}
+				return list;
 			}
-			return list;
 		}
 	}
-
 }

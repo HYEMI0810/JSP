@@ -277,6 +277,22 @@ public class BoardDAO {
 		}
 	}
 	
+	public int seq(String title, String contents, String writer) throws Exception{
+		String sql = "select seq from board where title=? and contents=?and writer=?";
+		try(Connection con = this.getConnection();
+			PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1, title);
+			pstat.setString(2, contents);
+			pstat.setString(3, writer);
+			try(ResultSet rs = pstat.executeQuery();){
+				if(rs.next()){
+					return rs.getInt("seq");
+				}
+			}
+		return 0;
+		}
+	}
+	
 }
 
 

@@ -30,7 +30,8 @@ $(function(){
      .writer{width: 100px;}
      .date{width: 100px;}
      .count{width: 65px;}
-     .contents{height: 420px;}  
+     .contents{height: 365px;}  
+     .file{height: 55px;overflow: scroll;}
      .footer{height: 45px; line-height: 45px;}    
      .controller{width: 550px; height: 50px; margin: 10px;}
      .comment{float: left; width: 450px; height: 100%; textalign: left}
@@ -49,6 +50,11 @@ $(function(){
                 <div class="count">${post.viewCount }</div>
             </div>
             <div class="contents">${post.contents }</div>
+            <div class="file">
+            <c:forEach	var="item" items="${file }">
+            	<a href ="files/${item.sysName}"> ${item.oriName} </a>
+            </c:forEach>
+            </div>
             <div class="footer">
                 <c:choose>
                     <c:when test="${login.id == post.writer }">

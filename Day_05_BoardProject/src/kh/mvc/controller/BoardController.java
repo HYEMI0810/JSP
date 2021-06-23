@@ -1,5 +1,6 @@
 package kh.mvc.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -9,11 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import DAO.BoardDAO;
 import DAO.MemberDAO;
 import DAO.CommentsDAO;
+import DAO.FilesDAO;
 import DTO.BoardDTO;
 import DTO.CommentsDTO;
+import DTO.FilesDTO;
 import DTO.MemberDTO;
 import kh.mvc.config.BoardConfig;
 
@@ -41,6 +48,7 @@ public class BoardController extends HttpServlet {
 		
 		try {
 		BoardDAO dao = BoardDAO.getInstance();
+		FilesDAO fdao = FilesDAO.getInstance();
 		
 		if(url.contentEquals("/boardList.board")){			
 			int cpage = Integer.parseInt(request.getParameter("cpage"));
@@ -56,14 +64,29 @@ public class BoardController extends HttpServlet {
 			
 		}else if(url.contentEquals("/board/write.board")) {
 			MemberDTO dto =(MemberDTO)request.getSession().getAttribute("login");
+			
+			
+			String filesPath = request.getServletContext().getRealPath("files");
+			File filesFolder = new File(filesPath);
+			int maxSize = 1024 * 1024 * 10;
+			if(!filesFolder.exists()) filesFolder.mkdir();
+			MultipartRequest multi = new MultipartRequest(request,filesPath,maxSize,"utf-8",new DefaultFileRenamePolicy());
+			
 			String writer = dto.getId(); 
-			String title = request.getParameter("title");
-			String contents = request.getParameter("contents");
+			String title = multi.getParameter("title");
+			String contents = multi.getParameter("contents");
 			
 			title = XSSFilter(title);
 			contents = XSSFilter(contents);
 			
 			int result = dao.write(title, contents, writer);
+			int seq = dao.seq(title, contents, writer);			
+		
+			String oriName = multi.getOriginalFileName("file");
+			String sysName = multi.getFilesystemName("file");
+		
+			FilesDTO fdto = new FilesDTO(0,oriName,sysName,null,seq);
+			int fresult = fdao.insert(fdto);
 			
 			response.sendRedirect(ctxPath+"/boardList.board?cpage=1");
 			
@@ -77,7 +100,7 @@ public class BoardController extends HttpServlet {
 			
 			request.setAttribute("post", bd);
 			request.setAttribute("comment", cd.commentList(seq));
-			
+			request.setAttribute("file", fdao.selectAll(seq));
 			request.getRequestDispatcher("board/boardView.jsp").forward(request, response);
 			
 		}else if(url.contentEquals("/delete.board")) {

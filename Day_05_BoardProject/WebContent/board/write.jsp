@@ -17,19 +17,24 @@
         div{border: 1px solid black;}
         .container{width: 550px;height: 500px; margin: auto;}
         .name{width: 100%; text-align: center; height: 50px; line-height: 50px;}
+        .con{width: 100% ;height:400px}
+        textarea{widgh:100%;heigh:100%}
         .title1{width: 100%;height: 50px;}
         .title{width: 100%;height: 100%;text-align: center;line-height: 40px;}
    </style>
 </head>
 <body>
-   <form action="write.board" method="post">
+   <form action="write.board" method="post" enctype=multipart/form-data>
     <div class="container">
         <div class="name">자유게시판 글 쓰기</div>
         <div class="title1">
             <input type="text" class="title" name="title" placeholder="제목을 입력하세요">
         </div>
         <div class="con">
-            <textarea cols="72" rows="25" id="summernote" name="contents"></textarea>
+            <textarea id="summernote" name="contents"></textarea>
+        </div>
+        <div class="upload">
+			<input type=file name="file" required><br>
         </div>
         <div class="btn">
             <input type="submit" value="등록">
